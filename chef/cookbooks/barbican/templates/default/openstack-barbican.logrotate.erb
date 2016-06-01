@@ -1,0 +1,12 @@
+
+/var/log/barbican/*.log {
+    compress
+    rotate 15
+    size 1M
+    dateext
+    missingok
+    notifempty
+    su barbican barbican
+    copytruncate
+    sharedscripts
+}
