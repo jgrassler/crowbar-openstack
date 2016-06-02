@@ -21,17 +21,7 @@ include_recipe "#{@cookbook_name}::common"
 application_path = "/srv/www/barbican-api/"
 application_exec_path = "#{application_path}/app.wsgi"
 
-bind_port = node[:barbican][:bind_port]
-bind_host = node[:barbican][:bind_host]
-
 package 'openstack-barbican-api'
-
-template "/etc/logrotate.d/openstack-barbican" do
-  source "openstack-barbican.logrotate.erb"
-  mode 0644
-  owner "root"
-  group "root"
-end
 
 apache_module "deflate" do
   conf false
@@ -51,15 +41,15 @@ template "#{node[:apache][:dir]}/sites-available/barbican-api.conf" do
   source "barbican-api.conf.erb"
   mode 0644
   variables(
-    application_path: application_exec_pathk
+    application_path: application_exec_path,
     application_exec_path: application_exec_path,
     barbican_user: node[:barbican][:user],
     barbican_group: node[:barbican][:group],
-    bind_host: bind_host,
-    bind_port: bind_port,
-    logfile: node[:barbican][:log],
-    processes: node[:barbican][:processes],
-    threads: node[:barbican][:threads],
+    bind_host: node[:barbican][:api][:bind_port],
+    bind_port: node[:barbican][:api][:bind_host],
+    logfile: node[:barbican][:api][:log],
+    processes: node[:barbican][:api][:processes],
+    threads: node[:barbican][:api][:threads],
   )
   notifies :reload, resources(service: "apache2")
 end

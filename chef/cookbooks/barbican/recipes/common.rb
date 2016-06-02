@@ -66,10 +66,17 @@ template "/etc/barbican/barbican.conf" do
     database_connection: database_connection,
     kek: SecureRandom.base64(32),
     keystone_listener: node[:barbican][:enable_keystone_listener],
-    host_href: "http://#{node[:barbican][:bind_host]}:#{node[:barbican][:bind_port]}",
+    host_href: "http://#{node[:barbican][:bind_host]}:#{node[:barbican][:api][:bind_port]}",
     rabbit_settings: fetch_rabbitmq_settings,
     keystone_settings: KeystoneHelper.keystone_settings(node, :barbican),
   )
+end
+
+template "/etc/logrotate.d/openstack-barbican" do
+  source "openstack-barbican.logrotate.erb"
+  mode 0644
+  owner "root"
+  group "root"
 end
 
 node.save
