@@ -1,0 +1,44 @@
+{
+  "id": "template-barbican",
+  "description": "Installation for barbican",
+  "attributes": {
+     "barbican" : {
+        "api" : {
+           "bind_host" : "*",
+           "threads" : 10,
+           "log" : "/var/log/barbican/barbican-api.log",
+           "bind_port" : 9311,
+           "processes" : 3
+        },
+        "db" : {
+           "database" : "barbican",
+           "password" : ""
+           "user" : "barbican",
+        },
+        "enable_keystone_listener" : false,
+        "group" : "group"
+        "user" : "barbican",
+     }
+  },
+  "deployment": {
+    "barbican": {
+      "crowbar-revision": 0,
+      "crowbar-applied": false,
+      "schema-revision": 1,
+      "element_states": {
+        "barbican-server": [ "readying", "ready", "applying" ]
+      },
+      "elements": {},
+      "element_order": [
+        [ "barbican-server" ]
+      ],
+      "config": {
+        "environment": "barbican-base-config",
+        "mode": "full",
+        "transitions": false,
+        "transition_list": []
+      }
+    }
+  }
+}
+
