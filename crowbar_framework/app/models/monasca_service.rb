@@ -88,9 +88,11 @@ class MonascaService < PacemakerServiceObject
     agent_nodes = nodes
 
     base["deployment"][@bc_name]["elements"]["monasca-agent"] = agent_nodes
-    base["deployment"][@bc_name]["elements"] = {
-      "monasca-server" => [server_nodes.first.name]
-    } unless server_nodes.nil?
+    unless server_nodes.nil?
+      base["deployment"][@bc_name]["elements"] = {
+        "monasca-server" => [server_nodes.first.name]
+      }
+    end
 
     base["attributes"][@bc_name]["database_instance"] =
       find_dep_proposal("database")
