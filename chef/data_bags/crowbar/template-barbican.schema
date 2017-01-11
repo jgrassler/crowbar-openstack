@@ -2,7 +2,7 @@
   "required": true,
   "type": "map",
   "mapping": {
-    "id": { "type": "str", "required": true, "pattern": "/^mybarclamp-|^template-mybarclamp$/" },
+    "id": { "type": "str", "required": true, "pattern": "/^barbican-|^template-barbican$/" },
     "description": { "required": true, "type": "str" },
     "attributes": {
       "required": true,
