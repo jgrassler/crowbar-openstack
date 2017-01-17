@@ -39,7 +39,14 @@
                   "plugin_collect_time_warn": { "type": "int", required: true },
                   "log_level": { "type": "str", required: true }
                 }
-              },
+            },
+            "log_agent": {
+              "required": true,
+              "type": "map",
+              "mapping": {
+                  "monasca_log_api_url": { "type": "str", required: true }
+              }
+            },
             "api": {
               "required": true,
               "type": "map",

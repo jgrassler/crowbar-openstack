@@ -1,5 +1,6 @@
 #
 # Copyright 2016, SUSE LINUX GmbH
+# Copyright 2017 FUJITSU LIMITED
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -29,6 +30,15 @@ class MonascaService < PacemakerServiceObject
     def role_constraints
       {
         "monasca-agent" => {
+          "unique" => false,
+          "admin" => true,
+          "count" => -1,
+          "exclude_platform" => {
+            "suse" => "< 12.1",
+            "windows" => "/.*/"
+          }
+        },
+        "monasca-log-agent" => {
           "unique" => false,
           "admin" => true,
           "count" => -1,
@@ -88,6 +98,7 @@ class MonascaService < PacemakerServiceObject
     agent_nodes = nodes
 
     base["deployment"][@bc_name]["elements"]["monasca-agent"] = agent_nodes
+    base["deployment"][@bc_name]["elements"]["monasca-log-agent"] = agent_nodes
     unless server_nodes.nil?
       base["deployment"][@bc_name]["elements"] = {
         "monasca-server" => [server_nodes.first.name]
