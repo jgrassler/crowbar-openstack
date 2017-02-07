@@ -22,15 +22,15 @@ output {
   monasca_log_api {
     ### keystone based settings
     keystone_api_url => "<%= @keystone_settings['internal_auth_url'] %>"
-    project_name => "<%= @keystone_settings['service_tenant'] %>"
-    username => "<%= @keystone_settings['service_user'] %>"
-    password => "<%= @keystone_settings['service_password'] %>"
+    project_name => "<%= @log_agent_keystone['service_tenant'] %>"
+    username => "<%= @log_agent_keystone['service_user'] %>"
+    password => "<%= @log_agent_keystone['service_password'] %>"
     user_domain_name => "<%= @keystone_settings['admin_domain'] %>"
     project_domain_name => "<%= @keystone_settings['admin_domain'] %>"
     ### monasca specific settings
     monasca_log_api_url => "<%= @log_agent_settings['monasca_log_api_url'] %>"
 <%- unless @log_agent_dimensions.nil? then -%>
-    dimensions => [<%= @log_agent_dimensions.map{|k,v| "\"#{k}\":\"#{v}\""}.join(',') %>]
+    dimensions => [<%= @log_agent_dimensions.map{|k,v| "\"#{k}:#{v}\""}.join(',') %>]
 <%- else -%>
     dimensions => []
 <%- end -%>

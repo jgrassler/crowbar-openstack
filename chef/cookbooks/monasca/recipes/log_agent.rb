@@ -16,86 +16,34 @@
 package "monasca-log-agent"
 
 log_agent_settings = node[:monasca][:log_agent]
+log_agent_keystone = log_agent_settings[:keystone]
 keystone_settings = KeystoneHelper.keystone_settings(node, @cookbook_name)
 
 log_agent_dimensions = {
   service: "monitoring",
   hostname: node["hostname"]
 }
-# TODO(trebskit) actually it should be retrieved from keystone
-log_agent_settings["monasca_log_api_url"] = "http://www.example.org"
-
-### create user for monasca-log-agent
-register_auth_hash = {
-  user: keystone_settings["admin_user"],
-  password: keystone_settings["admin_password"],
-  tenant: keystone_settings["admin_tenant"]
-}
-
-keystone_register "monasca-log-agent wakeup keystone" do
-  protocol keystone_settings["protocol"]
-  insecure keystone_settings["insecure"]
-  host keystone_settings["internal_url_host"]
-  port keystone_settings["admin_port"]
-  auth register_auth_hash
-  action :wakeup
-end
-
-keystone_register "register monasca-log-agent user" do
-  protocol keystone_settings["protocol"]
-  insecure keystone_settings["insecure"]
-  host keystone_settings["internal_url_host"]
-  port keystone_settings["admin_port"]
-  auth register_auth_hash
-  user_name keystone_settings["service_user"]
-  user_password keystone_settings["service_password"]
-  tenant_name keystone_settings["service_tenant"]
-  action :add_user
-end
-
-keystone_register "give monasca-log-agent user access" do
-  protocol keystone_settings["protocol"]
-  insecure keystone_settings["insecure"]
-  host keystone_settings["internal_url_host"]
-  port keystone_settings["admin_port"]
-  auth register_auth_hash
-  user_name keystone_settings["service_user"]
-  tenant_name keystone_settings["service_tenant"]
-  role_name "admin"
-  action :add_access
-end
-
-keystone_register "register monasca-log-agent service" do
-  protocol keystone_settings["protocol"]
-  insecure keystone_settings["insecure"]
-  host keystone_settings["internal_url_host"]
-  port keystone_settings["admin_port"]
-  auth register_auth_hash
-  service_name "monasca-log-agent"
-  service_type "monitoring"
-  service_description "Monasca Log Agent monitoring service"
-  action :add_service
-end
 
 directory "/var/log/monasca-log-agent/" do
-  owner log_agent_settings[:user]
-  owner log_agent_settings[:group]
+  owner log_agent_settings["user"]
+  group log_agent_settings["group"]
   mode 0o755
   recursive true
 end
 directory "/etc/monasca-log-agent/" do
-  owner log_agent_settings[:user]
-  owner log_agent_settings[:group]
+  owner log_agent_settings["user"]
+  group log_agent_settings["group"]
   mode 0o755
   recursive true
 end
 
 template "/etc/monasca-log-agent/agent.conf" do
   source "log-agent.conf.erb"
-  owner log_agent_settings[:user]
-  owner log_agent_settings[:group]
+  owner log_agent_settings["user"]
+  group log_agent_settings["group"]
   mode 0o640
   variables(
+    log_agent_keystone: log_agent_keystone,
     log_agent_settings: log_agent_settings,
     log_agent_dimensions: log_agent_dimensions,
     keystone_settings: keystone_settings

@@ -1,5 +1,6 @@
 #
 # Copyright 2016 SUSE Linux GmbH
+# Copyright 2017 Fujitsu LIMITED
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -35,6 +36,7 @@ default[:monasca][:ha_enabled] = monasca_ha_enabled
 
 default[:monasca][:api][:bind_host] = "*"
 
+# log-agent default service settings
 default[:monasca][:log_agent][:service_name] = monasca_log_agent_service_name
 default[:monasca][:log_agent][:user] = "monasca-log-agent"
 default[:monasca][:log_agent][:group] = "logstash"

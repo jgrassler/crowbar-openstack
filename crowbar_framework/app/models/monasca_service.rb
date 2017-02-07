@@ -109,8 +109,12 @@ class MonascaService < PacemakerServiceObject
       find_dep_proposal("database")
     base["attributes"][@bc_name]["keystone_instance"] =
       find_dep_proposal("keystone")
+
     base["attributes"][@bc_name]["service_password"] = random_password
     base["attributes"][@bc_name][:db][:password] = random_password
+    # note(trebskit) once agent is ready, uncomment following line
+    # base["attributes"][@bc_name][:agent][:keystone][:service_password] = random_password
+    base["attributes"][@bc_name][:log_agent][:keystone][:service_password] = random_password
 
     @logger.debug("Monasca create_proposal: exiting")
     base

@@ -28,7 +28,15 @@
            "log_level": "INFO"
         },
         "log_agent": {
-          "monasca_log_api_url": ""
+          "user": "monasca-log-agent",
+          "group": "logstash",
+          "monasca_log_api_url": "",
+          "keystone": {
+            "service_user": "cmm-log-agent",
+            "service_password": "",
+            "service_tenant": "cmm",
+            "service_role": "cmm-agent"
+          }
         },
         "api" : {
            "bind_host" : "*",
@@ -48,7 +56,9 @@
         "database_instance": "none",
         "keystone_instance": "none",
         "service_password": "none",
-        "service_user": "monasca"
+        "service_user": "monasca",
+        "service_tenant": "cmm",
+        "service_roles": ["cmm-agent"]
      }
   },
   "deployment": {
