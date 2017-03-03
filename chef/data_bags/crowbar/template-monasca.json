@@ -2,80 +2,80 @@
   "id": "template-monasca",
   "description": "Logging and Monitoring Service for OpenStack",
   "attributes": {
-     "monasca" : {
-        "agent" : {
-           "monasca_url": "",
-           "username": "",
-           "password": "",
-           "keystone_url": "",
-           "user_domain_id": "",
-           "user_domain_name": "",
-           "project_name": "",
-           "project_domain_id": "",
-           "project_domain_name": "",
-           "project_id": "",
-           "insecure": true,
-           "ca_file": "",
-           "max_buffer_size": 1000,
-           "max_measurement_buffer_size": -1,
-           "backlog_send_rate": 5,
-           "amplifier": 0,
-           "hostname": "",
-           "check_frequency": 15,
-           "num_collector_threads": 1,
-           "pool_full_max_retries": 5,
-           "plugin_collect_time_warn": 6,
-           "log_level": "INFO"
-        },
-        "log_agent": {
-          "user": "monasca-log-agent",
-          "group": "logstash",
-          "monasca_log_api_url": "",
-          "keystone": {
-            "service_user": "cmm-log-agent",
-            "service_password": "",
-            "service_tenant": "cmm",
-            "service_role": "cmm-agent"
-          }
-        },
-        "api" : {
-           "bind_host" : "*",
-           "bind_port" : 8070,
-           "processes" : 3,
-           "ssl" : false,
-           "threads" : 10
-        },
-        "master" : {
-            "cmm_tarball_url": "http://127.0.0.1/cmm/cmm-suse.tgz",
-            "influxdb_mon_api_password" : "",
-            "influxdb_mon_persister_password" : "",
-            "database_notification_password" : "",
-            "database_monapi_password" : "",
-            "database_thresh_password" : "",
-            "database_logapi_password" : "",
-            "keystone_cmm_operator_user_password" : "",
-            "keystone_cmm_agent_password" : "",
-            "keystone_admin_agent_password" : "",
-            "database_grafana_password" : ""
-        },
-        "db" : {
-           "database" : "monasca",
-           "password" : "",
-           "user" : "monasca"
-        },
-        "debug" : false,
-        "group" : "monasca",
-        "user" : "monasca",
-        "database_instance": "none",
-        "keystone_instance": "none",
-        "service_password": "none",
-        "service_user": "monasca",
-        "service_tenant": "cmm",
-        "service_roles": ["cmm-agent"]
-     }
+    "monasca": {
+      "agent": {
+        "monasca_url": "",
+        "username": "",
+        "password": "",
+        "keystone_url": "",
+        "user_domain_id": "",
+        "user_domain_name": "",
+        "project_name": "",
+        "project_domain_id": "",
+        "project_domain_name": "",
+        "project_id": "",
+        "insecure": true,
+        "ca_file": "",
+        "max_buffer_size": 1000,
+        "max_measurement_buffer_size": -1,
+        "backlog_send_rate": 5,
+        "amplifier": 0,
+        "hostname": "",
+        "check_frequency": 15,
+        "num_collector_threads": 1,
+        "pool_full_max_retries": 5,
+        "plugin_collect_time_warn": 6,
+        "log_level": "INFO"
+      },
+      "log_agent": {
+        "user": "monasca-log-agent",
+        "group": "logstash",
+        "monasca_log_api_url": "",
+        "keystone": {
+          "service_user": "cmm-log-agent",
+          "service_password": "",
+          "service_tenant": "cmm",
+          "service_role": "cmm-agent"
+        }
+      },
+      "api": {
+        "bind_host": "*",
+        "bind_port": 8070,
+        "processes": 3,
+        "ssl": false,
+        "threads": 10
+      },
+      "master": {
+        "cmm_tarball_url": "http://127.0.0.1/cmm/cmm-suse.tgz",
+        "influxdb_mon_api_password": "",
+        "influxdb_mon_persister_password": "",
+        "database_notification_password": "",
+        "database_monapi_password": "",
+        "database_thresh_password": "",
+        "database_logapi_password": "",
+        "keystone_cmm_operator_user_password": "",
+        "keystone_cmm_agent_password": "",
+        "keystone_admin_agent_password": "",
+        "database_grafana_password": ""
+      },
+      "db": {
+        "database": "monasca",
+        "password": "",
+        "user": "monasca"
+      },
+      "debug": false,
+      "group": "monasca",
+      "user": "monasca",
+      "database_instance": "none",
+      "keystone_instance": "none",
+      "service_password": "none",
+      "service_user": "monasca",
+      "service_tenant": "cmm",
+      "service_roles": ["cmm-agent"]
+    }
   },
   "deployment": {
-    "monasca" : {
+    "monasca": {
       "crowbar-revision": 0,
       "crowbar-applied": false,
       "schema-revision": 100,
