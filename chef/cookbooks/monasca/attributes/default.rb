@@ -17,11 +17,15 @@
 monasca_debug = false
 monasca_ha_enabled = false
 
+monasca_metric_agent_service_name = "monasca-agent"
 monasca_log_agent_service_name = "monasca-log-agent"
 
 default[:monasca][:platform] = {
   packages: [],
-  services: [monasca_log_agent_service_name]
+  services: [
+    monasca_metric_agent_service_name,
+    monasca_log_agent_service_name
+  ]
 }
 
 default[:monasca][:db][:database] = "monasca"
@@ -32,9 +36,15 @@ override[:monasca][:group] = "monasca"
 override[:monasca][:user] = "monasca"
 
 default[:monasca][:debug] = monasca_debug
-default[:monasca][:ha_enabled] = monasca_ha_enabled
+default[:monasca][:ha][:enabled] = monasca_ha_enabled
 
 default[:monasca][:api][:bind_host] = "*"
+
+# metric-agent default service settings
+default[:monasca][:metric_agent][:service_name] = monasca_metric_agent_service_name
+default[:monasca][:metric_agent][:user] = "monasca-agent"
+default[:monasca][:metric_agent][:group] = "monasca"
+default[:monasca][:metric_agent][:debug] = monasca_debug
 
 # log-agent default service settings
 default[:monasca][:log_agent][:service_name] = monasca_log_agent_service_name

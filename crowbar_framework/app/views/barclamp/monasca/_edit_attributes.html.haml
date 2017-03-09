@@ -6,6 +6,24 @@
 
     %fieldset
       %legend
+        = t(".metric_agent_header")
+
+      = boolean_field %w(metric_agent insecure)
+      = boolean_field %w(metric_agent system_only)
+      = string_field %w(metric_agent ca_file)
+      = select_field %w(metric_agent log_level), :collection => :log_levels
+      = integer_field %w(metric_agent statsd_port)
+      = integer_field %w(metric_agent check_frequency)
+      = integer_field %w(metric_agent num_collector_threads)
+      = integer_field %w(metric_agent pool_full_max_retries)
+      = integer_field %w(metric_agent plugin_collect_time_warn)
+      = integer_field %w(metric_agent max_buffer_size)
+      = integer_field %w(metric_agent max_measurement_buffer_size)
+      = integer_field %w(metric_agent backlog_send_rate)
+      = integer_field %w(metric_agent amplifier)
+
+    %fieldset
+      %legend
         = t(".master_header")
 
       = string_field %w(master cmm_tarball_url)
@@ -19,4 +37,3 @@
       = password_field %w(master keystone_cmm_agent_password)
       = password_field %w(master keystone_admin_agent_password)
       = password_field %w(master database_grafana_password)
-

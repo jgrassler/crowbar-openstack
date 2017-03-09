@@ -68,10 +68,9 @@ end
 ### single credentials all metrics & logs agents
 agents_settings = []
 
-# once agent is ready, uncomment following lines
-# if node["roles"].include?("monasca-agent")
-#   agents_settings.push(node[:monasca][:agent][:keystone])
-# end
+if node["roles"].include?("monasca-metric-agent")
+  agents_settings.push(node[:monasca][:metric_agent][:keystone])
+end
 if node["roles"].include?("monasca-log-agent")
   la_keystone = node[:monasca][:log_agent][:keystone]
   agents_settings.push(la_keystone)

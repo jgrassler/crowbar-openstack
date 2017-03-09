@@ -29,7 +29,8 @@ barclamp:
   display: 'Monasca'
   description: 'OpenStack Monasca: Logging and Monitoring service for OpenStack'
   version: 0
-  user_managed: false
+  # TODO: change to false to hide it from default users
+  user_managed: true
   requires:
     - '@crowbar'
     - 'database'
