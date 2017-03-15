@@ -4,7 +4,6 @@
   "attributes": {
     "monasca": {
       "metric_agent": {
-        "monasca_url": "",
         "keystone": {
           "service_user": "cmm-agent",
           "service_password": "",
@@ -27,9 +26,6 @@
         "amplifier": 0
       },
       "log_agent": {
-        "user": "monasca-log-agent",
-        "group": "logstash",
-        "monasca_log_api_url": "",
         "keystone": {
           "service_user": "cmm-log-agent",
           "service_password": "",
@@ -43,6 +39,10 @@
         "processes": 3,
         "ssl": false,
         "threads": 10
+      },
+      "log_api": {
+        "port": 5607,
+        "ssl": false
       },
       "master": {
         "cmm_tarball_url": "http://127.0.0.1/cmm/cmm-suse.tgz",

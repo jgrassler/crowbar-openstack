@@ -16,7 +16,6 @@
               "required": true,
               "type": "map",
               "mapping": {
-                "monasca_url": { "type": "str", "required": true },
                 "keystone": {
                   "required": true,
                   "type": "map",
@@ -47,9 +46,6 @@
               "required": true,
               "type": "map",
               "mapping": {
-                "user": { "type": "str", "required": true },
-                "group": { "type": "str", "required": true },
-                "monasca_log_api_url": { "type": "str", "required": true },
                 "keystone": {
                   "required": true,
                   "type": "map",
@@ -71,6 +67,14 @@
                 "processes": { "required": true, "type": "int" },
                 "ssl": { "required": true, "type": "bool" },
                 "threads": { "required": true, "type": "int" }
+              }
+            },
+            "log_api": {
+              "required": true,
+              "type": "map",
+              "mapping": {
+                "port": { "required": true, "type": "int" },
+                "ssl": { "required": true, "type": "bool" }
               }
             },
             "master": {

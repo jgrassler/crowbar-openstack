@@ -8,9 +8,7 @@
       %legend
         = t(".metric_agent_header")
 
-      = boolean_field %w(metric_agent insecure)
       = boolean_field %w(metric_agent system_only)
-      = string_field %w(metric_agent ca_file)
       = select_field %w(metric_agent log_level), :collection => :log_levels
       = integer_field %w(metric_agent statsd_port)
       = integer_field %w(metric_agent check_frequency)

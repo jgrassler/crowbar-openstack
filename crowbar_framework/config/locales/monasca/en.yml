@@ -29,8 +29,8 @@ en:
         metric_agent_header: 'Metrics Agent Settings'
         metric_agent:
           monasca_url: 'Monasca URL'
-          insecure: 'Do you want insecure connection?'
           system_only: 'Setting to true will cause Monasca setup to run in `system_only` mode only, configure the base config and system metrics (cpu, disk, load, memory, network)'
+          insecure: 'Do you want insecure connection?'
           ca_file: 'Sets the path to the ca certs file if using certificates. Required only if insecure is set to False (ca_file)'
           log_level: 'Log level'
           statsd_port: 'Monasca Statsd port'

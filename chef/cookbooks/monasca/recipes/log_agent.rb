@@ -19,6 +19,11 @@ log_agent_settings = node[:monasca][:log_agent]
 log_agent_keystone = log_agent_settings[:keystone]
 keystone_settings = KeystoneHelper.keystone_settings(node, @cookbook_name)
 
+monasca_servers = search(:node, "roles:monasca-server")
+monasca_server = monasca_servers[0]
+
+monasca_log_api_url = MonascaHelper.log_api_public_url(monasca_server)
+
 log_agent_dimensions = {
   service: "monitoring",
   hostname: node["hostname"]
@@ -43,6 +48,7 @@ template "/etc/monasca-log-agent/agent.conf" do
   group log_agent_settings["group"]
   mode 0o640
   variables(
+    monasca_log_api_url: monasca_log_api_url,
     log_agent_keystone: log_agent_keystone,
     log_agent_settings: log_agent_settings,
     log_agent_dimensions: log_agent_dimensions,

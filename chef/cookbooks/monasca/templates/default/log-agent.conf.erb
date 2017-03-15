@@ -28,7 +28,7 @@ output {
     user_domain_name => "<%= @keystone_settings['admin_domain'] %>"
     project_domain_name => "<%= @keystone_settings['admin_domain'] %>"
     ### monasca specific settings
-    monasca_log_api_url => "<%= @log_agent_settings['monasca_log_api_url'] %>"
+    monasca_log_api_url => "<%= @monasca_log_api_url %>"
 <%- unless @log_agent_dimensions.nil? then -%>
     dimensions => [<%= @log_agent_dimensions.map{|k,v| "\"#{k}:#{v}\""}.join(',') %>]
 <%- else -%>
