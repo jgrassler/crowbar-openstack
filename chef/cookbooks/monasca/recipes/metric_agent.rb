@@ -48,7 +48,9 @@ template monasca_reconfigure_file do
 end
 
 execute "monasca-setup detect services" do
-  command monasca_reconfigure_file
+  # Run monasca-setup with `sudo`
+  # https://github.com/openstack/monasca-agent/blob/master/docs/Agent.md#monasca-setup-recommended
+  command "sudo #{monasca_reconfigure_file}"
   only_if { File.exist?(monasca_reconfigure_file) }
   user agent_settings["user"]
   group agent_settings["group"]
