@@ -19,19 +19,3 @@
       = integer_field %w(metric_agent max_measurement_buffer_size)
       = integer_field %w(metric_agent backlog_send_rate)
       = integer_field %w(metric_agent amplifier)
-
-    %fieldset
-      %legend
-        = t(".master_header")
-
-      = string_field %w(master cmm_tarball_url)
-      = password_field %w(master influxdb_mon_api_password)
-      = password_field %w(master influxdb_mon_persister_password)
-      = password_field %w(master database_notification_password)
-      = password_field %w(master database_monapi_password)
-      = password_field %w(master database_thresh_password)
-      = password_field %w(master database_logapi_password)
-      = password_field %w(master keystone_cmm_operator_user_password)
-      = password_field %w(master keystone_cmm_agent_password)
-      = password_field %w(master keystone_admin_agent_password)
-      = password_field %w(master database_grafana_password)

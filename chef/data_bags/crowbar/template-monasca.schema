@@ -81,7 +81,6 @@
               "required": true,
               "type": "map",
               "mapping": {
-                "cmm_tarball_url": { "required": true, "type": "str" },
                 "influxdb_mon_api_password": { "required": true, "type": "str" },
                 "influxdb_mon_persister_password": { "required": true, "type": "str" },
                 "database_notification_password": { "required": true, "type": "str" },
