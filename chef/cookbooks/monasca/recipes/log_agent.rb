@@ -13,7 +13,7 @@
 # limitations under the License.
 #
 
-package "monasca-log-agent"
+package "openstack-monasca-log-agent"
 
 log_agent_settings = node[:monasca][:log_agent]
 log_agent_keystone = log_agent_settings[:keystone]
