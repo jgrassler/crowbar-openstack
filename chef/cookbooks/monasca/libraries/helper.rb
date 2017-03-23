@@ -34,6 +34,24 @@ module MonascaHelper
     "#{protocol}://#{host}:#{port}/v2.0"
   end
 
+  def self.api_admin_url(node)
+    host = monasca_admin_host(node)
+    # SSL is not supported at this moment
+    # protocol = node[:monasca][:api][:ssl] ? "https" : "http"
+    protocol = "http"
+    port = node[:monasca][:api][:bind_port]
+    "#{protocol}://#{host}:#{port}/v2.0"
+  end
+
+  def self.api_internal_url(node)
+    host = get_host_for_monitoring_url(node)
+    # SSL is not supported at this moment
+    # protocol = node[:monasca][:api][:ssl] ? "https" : "http"
+    protocol = "http"
+    port = node[:monasca][:api][:bind_port]
+    "#{protocol}://#{host}:#{port}/v2.0"
+  end
+
   def self.log_api_public_url(node)
     host = monasca_public_host(node)
     # SSL is not supported at this moment
