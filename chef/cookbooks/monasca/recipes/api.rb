@@ -17,6 +17,7 @@
 include_recipe "apache2"
 include_recipe "apache2::mod_wsgi"
 include_recipe "apache2::mod_rewrite"
+include_recipe "#{@cookbook_name}::common"
 
 apache_module "deflate" do
   conf false
