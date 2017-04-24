@@ -50,3 +50,7 @@ elasticsearch_nodes: "[<%= @monasca_net_ip %>]"
 elasticsearch_hosts: <%= @monasca_net_ip %>
 monasca_api_log_level: <%= @api_settings['log_level'] %>
 log_api_log_level: <%= @log_api_settings['log_level'] %>
+
+curator_cron_config: <%= @curator_cron_config %>
+curator_actions: <%= @curator_actions %>
+curator_excluded_index: <%= @curator_excluded_index %>
