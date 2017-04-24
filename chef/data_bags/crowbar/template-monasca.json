@@ -25,18 +25,39 @@
         "amplifier": 0
       },
       "log_agent": {
+        "delay": 10,
+        "elapsed_time_sec": 30,
         "keystone": {
           "service_user": "monasca-log-agent",
           "service_password": "",
           "service_tenant": "monasca",
           "service_role": "monasca-agent"
-        }
+        },
+        "max_data_size_kb": 5120,
+        "num_of_logs": 125
       },
       "api": {
         "bind_host": "*",
         "processes": 3,
         "threads": 10,
         "log_level": "INFO"
+      },
+      "elasticsearch": {
+        "repo_dir": []
+      },
+      "kafka": {
+        "log_retention_hours": 24,
+        "log_retention_bytes": 21474836480
+      },
+      "elasticsearch_curator": {
+        "delete_exclude_index": [ ".kibana" ],
+        "cron_config": {
+          "minute": "0",
+          "hour": "0",
+          "day": "*",
+          "weekday": "*",
+          "month": "*"
+        }
       },
       "log_api": {
         "log_level": "INFO"
@@ -47,6 +68,7 @@
       "master": {
         "influxdb_mon_api_password": "",
         "influxdb_mon_persister_password": "",
+        "influxdb_retention_policy": "60d",
         "database_notification_password": "",
         "database_monapi_password": "",
         "database_thresh_password": "",

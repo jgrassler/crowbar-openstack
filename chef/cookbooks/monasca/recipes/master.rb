@@ -66,7 +66,42 @@ monasca_node = monasca_servers[0]
 monasca_net_ip = MonascaHelper.get_host_for_monitoring_url(monasca_node)
 pub_net_ip = CrowbarHelper.get_host_for_public_url(monasca_node, false, false)
 
-ansible_vars = {
+curator_actions = []
+curator_excluded_index = []
+
+if node[:monasca][:elasticsearch_curator].key?(:delete_after_days)
+  curator_actions.push(
+    "delete_by" => "age",
+    "description" => "Delete indices older than " \
+                     "#{node[:monasca][:elasticsearch_curator][:delete_after_days]} days",
+    "deleted_days" => node[:monasca][:elasticsearch_curator][:delete_after_days],
+    "disable" => false
+  )
+end
+
+if node[:monasca][:elasticsearch_curator].key?(:delete_after_size)
+  curator_actions.push(
+    "delete_by" => "size",
+    "description" => "Delete indices larger than " \
+                     "#{node[:monasca][:elasticsearch_curator][:delete_after_size]}MB",
+    "deleted_size" => node[:monasca][:elasticsearch_curator][:delete_after_size],
+    "disable" => false
+  )
+end
+
+node[:monasca][:elasticsearch_curator][:delete_exclude_index].each do |index|
+  curator_excluded_index.push(
+    "index_name" => index,
+    "exclude" => true
+  )
+end
+
+curator_cron_config = {}
+node[:monasca][:elasticsearch_curator][:cron_config].each_pair do |field, value|
+  curator_cron_config[field] = value
+end
+
+vars = {
   influxdb_mon_api_password: node[:monasca][:master][:influxdb_mon_api_password],
   influxdb_mon_persister_password: node[:monasca][:master][:influxdb_mon_persister_password],
   database_notification_password: node[:monasca][:master][:database_notification_password],
@@ -95,6 +130,8 @@ ansible_vars = {
   keystone_admin_project: keystone_settings["admin_tenant"],
 
   memcached_listen_ip: monasca_net_ip,
+  kafka_log_retention_hours: node[:monasca][:kafka][:log_retention_hours],
+  kafka_log_retention_bytes: node[:monasca][:kafka][:log_retention_bytes],
   kafka_host: monasca_net_ip,
   kibana_host: pub_net_ip,
   log_api_bind_host: "*",
@@ -111,11 +148,19 @@ ansible_vars = {
   monasca_log_api_url: "http://#{pub_net_ip}:#{node[:monasca][:log_api][:bind_port]}/v2.0",
   memcached_nodes: ["#{monasca_net_ip}:11211"],
   influxdb_url: "http://#{monasca_net_ip}:8086",
+  influxdb_retention_policy: node[:monasca][:master][:influxdb_retention_policy],
   elasticsearch_nodes: "[#{monasca_net_ip}]",
   elasticsearch_hosts: monasca_net_ip,
   monasca_api_log_level: node[:monasca][:api][:log_level],
-  log_api_log_level: node[:monasca][:log_api][:log_level]
-}.to_json
+  log_api_log_level: node[:monasca][:log_api][:log_level],
+  curator_cron_config: [curator_cron_config],
+  elasticsearch_repo_dir: node[:monasca][:elasticsearch][:repo_dir]
+}
+
+vars["curator_actions"] = curator_actions unless curator_actions.empty?
+vars["curator_excluded_index"] = curator_excluded_index unless curator_excluded_index.empty?
+
+ansible_vars = vars.to_json
 
 execute "run ansible" do
   command "rm -f /opt/monasca-installer/.installed " \

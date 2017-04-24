@@ -45,6 +45,8 @@
               "required": true,
               "type": "map",
               "mapping": {
+                "delay": { "type": "int", "required": true },
+                "elapsed_time_sec": { "type": "int", "required": true },
                 "keystone": {
                   "required": true,
                   "type": "map",
@@ -54,7 +56,9 @@
                     "service_tenant": { "type": "str", "required": false },
                     "service_role": { "type": "str", "required": false }
                   }
-                }
+                },
+                "max_data_size_kb": { "type": "int", "required": true },
+                "num_of_logs": { "type": "int", "required": true }
               }
             },
             "api": {
@@ -65,6 +69,45 @@
                 "processes": { "required": true, "type": "int" },
                 "threads": { "required": true, "type": "int" },
                 "log_level": { "type": "str", "required": true }
+              }
+            },
+            "elasticsearch": {
+              "required": true,
+              "type": "map",
+              "mapping": {
+                "repo_dir": {
+                  "required": true,
+                  "type": "seq",
+                  "sequence": [ { "type": "str" } ]
+                  }
+                }
+            },
+            "elasticsearch_curator": {
+              "required": true,
+              "type": "map",
+              "mapping": {
+                  "delete_after_days": { "required": false, "type": "int" },
+                  "delete_after_size": { "required": false, "type": "int" },
+                  "delete_exclude_index": { "type": "seq", "required": true, "sequence": [ { "type": "str" } ] },
+                  "cron_config": {
+                    "required": true,
+                    "type": "map",
+                    "mapping": {
+                      "day": { "required": true, "type": "str" },
+                      "hour": { "required": true, "type": "str" },
+                      "minute": { "required": true, "type": "str" },
+                      "month": { "required": true, "type": "str" },
+                      "weekday": { "required": true, "type": "str" }
+                    }
+                    }
+                }
+            },
+            "kafka": {
+              "required": true,
+              "type": "map",
+              "mapping": {
+                "log_retention_bytes": { "required": true, "type": "int" },
+                "log_retention_hours": { "required": true, "type": "int" }
               }
             },
             "log_api": {
@@ -87,6 +130,11 @@
               "mapping": {
                 "influxdb_mon_api_password": { "required": true, "type": "str" },
                 "influxdb_mon_persister_password": { "required": true, "type": "str" },
+                "influxdb_retention_policy": {
+                    "required": true,
+                    "type": "str",
+                    "pattern": "/^\d+[mhdw]|INF$/" 
+                  },
                 "database_notification_password": { "required": true, "type": "str" },
                 "database_monapi_password": { "required": true, "type": "str" },
                 "database_thresh_password": { "required": true, "type": "str" },
