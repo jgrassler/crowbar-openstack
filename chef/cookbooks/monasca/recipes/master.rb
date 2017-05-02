@@ -98,8 +98,8 @@ ansible_vars = {
   kibana_host: pub_net_ip,
   kibana_plugins: {
     'monasca-kibana-plugin' => {
+      'url' => 'monasca-kibana-plugin-0.0.5.tar.gz',
       'configuration' => {
-        'url' => 'monasca-kibana-plugin-0.0.5.tar.gz',
 				'monasca-kibana-plugin.enabled' => true,
 				'monasca-kibana-plugin.auth_uri' => keystone_settings["public_auth_url"],
 				'monasca-kibana-plugin.cookie.isSecure' => false
