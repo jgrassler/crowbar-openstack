@@ -20,6 +20,8 @@ package "monasca-kibana-plugin" do
   notifies :run, "execute[install monasca-kibana-plugin]", :delayed
 end
 
+service "kibana"
+
 plugin_path = IO.popen('rpm -ql monasca-kibana-plugin | grep tar.gz', &:read).chomp!
 
 keystone_settings = KeystoneHelper.keystone_settings(node, @cookbook_name)
@@ -32,6 +34,7 @@ template "/etc/kibana/kibana.yml" do
   owner "root"
   group "root"
   mode "0444"
+  notifies :restart, "service[kibana]"
   variables(
     port: 5601,
     bind_address: pub_net_ip,
