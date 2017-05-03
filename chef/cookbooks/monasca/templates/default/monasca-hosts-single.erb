@@ -19,9 +19,6 @@ log-transformer-node             ansible_ssh_host=<%= @monasca_hosts[0] %> ansib
 # Monasca-log-persister
 log-persister-node               ansible_ssh_host=<%= @monasca_hosts[0] %> ansible_ssh_user=<%= @ansible_ssh_user %>
 
-# Kibana
-kibana-node                      ansible_ssh_host=<%= @monasca_hosts[0] %> ansible_ssh_user=<%= @ansible_ssh_user %>
-
 # Elasticsearch
 elasticsearch-node               ansible_ssh_host=<%= @monasca_hosts[0] %> ansible_ssh_user=<%= @ansible_ssh_user %>
 
@@ -111,7 +108,6 @@ log-transformer-node
 elasticsearch-node
 
 [kibana_group]
-kibana-node es_node_for_kibana=elasticsearch-node
 
 [storm_nimbus_group]
 storm-nimbus-node
