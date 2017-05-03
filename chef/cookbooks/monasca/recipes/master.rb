@@ -100,9 +100,9 @@ ansible_vars = {
     'monasca-kibana-plugin' => {
       'url' => 'monasca-kibana-plugin-0.0.5.tar.gz',
       'configuration' => {
-				'monasca-kibana-plugin.enabled' => true,
-				'monasca-kibana-plugin.auth_uri' => keystone_settings["public_auth_url"],
-				'monasca-kibana-plugin.cookie.isSecure' => false
+        'monasca-kibana-plugin.enabled' => true,
+        'monasca-kibana-plugin.auth_uri' => keystone_settings["public_auth_url"],
+        'monasca-kibana-plugin.cookie.isSecure' => false
         }
       }
     },
