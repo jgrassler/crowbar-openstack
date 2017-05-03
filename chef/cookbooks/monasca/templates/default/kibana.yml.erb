@@ -76,7 +76,7 @@ logging.quiet: false
 logging.verbose: false
 
 <% if @plugin -%>
-<% @plugin.each_pair |key,val| do -%>
+<% @plugin.each_pair do |key,val| -%>
 <%= key %>: <%= val %>
 <% end -%>
 <% end -%>
