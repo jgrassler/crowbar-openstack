@@ -36,6 +36,7 @@ template "/etc/kibana/kibana.yml" do
   mode "0444"
   notifies :restart, "service[kibana]"
   variables(
+    base_path: '/monitoring/logs_proxy',
     port: 5601,
     bind_address: pub_net_ip,
     elasticsearch_url: "http://#{pub_net_ip}:9200",
