@@ -35,7 +35,6 @@
                 "num_collector_threads": { "type": "int", "required": true },
                 "pool_full_max_retries": { "type": "int", "required": true },
                 "plugin_collect_time_warn": { "type": "int", "required": true },
-                "max_buffer_size": { "type": "int", "required": true },
                 "max_measurement_buffer_size": { "type": "int", "required": true },
                 "backlog_send_rate": { "type": "int", "required": true },
                 "amplifier": { "type": "int", "required": true }

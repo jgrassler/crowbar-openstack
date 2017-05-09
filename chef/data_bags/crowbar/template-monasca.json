@@ -19,7 +19,6 @@
         "num_collector_threads": 1,
         "pool_full_max_retries": 5,
         "plugin_collect_time_warn": 6,
-        "max_buffer_size": 1000,
         "max_measurement_buffer_size": -1,
         "backlog_send_rate": 1000,
         "amplifier": 0
