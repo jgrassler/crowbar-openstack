@@ -54,6 +54,12 @@ package "grafana" do
   action :install
 end
 
+# With Grafana 4 we no longer need the old grafana-pache package
+package "grafana-apache" do
+  action :remove
+  notifies :reload, resources(service: "apache2")
+end
+
 template "/etc/grafana/grafana.ini" do
   source "grafana.ini.erb"
   variables(
