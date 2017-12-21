@@ -1183,7 +1183,7 @@
               ],
               "error": "",
               "function": "none",
-              "metric": "mem.used_mb",
+              "metric": "mem.used_real_mb",
               "period": "300",
               "refId": "A",
               "series": "cpu.percent"
@@ -1194,7 +1194,7 @@
               "dimensions": [],
               "error": "",
               "group": false,
-              "metric": "mem.used_mb",
+              "metric": "mem.used_real_mb",
               "period": "300",
               "refId": "B"
             }
