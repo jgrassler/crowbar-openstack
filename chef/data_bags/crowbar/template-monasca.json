@@ -72,6 +72,7 @@
         "repo_dir": []
       },
       "elasticsearch_curator": {
+        "delete_after_days": 60,
         "delete_exclude_index": [ ".kibana" ],
         "cron_config": {
           "minute": "0",
