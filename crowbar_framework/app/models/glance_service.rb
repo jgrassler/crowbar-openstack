@@ -143,22 +143,22 @@ class GlanceService < OpenstackServiceObject
       end
     end
 
-    # allocate a IP from the ceph_client network if Ceph is used
-    ceph_proposal = Proposal.find_by(barclamp: "ceph")
-    network_proposal = Proposal.find_by(barclamp: "network")
+    # allocate a IP from the ses_client network if SES integration is enabled and
+    # a network with that name exists.
+    if SES.configured?
+      network_name = "ses_client"
+      network_proposal = Proposal.find_by(barclamp: "network")
 
-    if ceph_proposal
-      ceph_client = ceph_proposal["attributes"]["ceph"]["client_network"]
-      # is the ceph_client network really available?
-      if network_proposal["attributes"]["network"]["networks"][ceph_client].nil?
-        raise I18n.t(
-          "barclamp.#{@bc_name}.validation.ceph_client_network_not_available",
-          ceph_client: ceph_client
+      # is the ses_client network available?
+      if network_proposal["attributes"]["network"]["networks"][network_name].nil?
+        @logger.warn I18n.t(
+          "barclamp.#{@bc_name}.validation.ses_client_network_not_available",
+          ses_client: "ses_client"
         )
       end
       server_nodes.each do |n|
-        @logger.info("Allocating an IP from the Ceph client network '#{ceph_client}' for node #{n}")
-        net_svc.allocate_ip "default", ceph_client, "host", n
+        @logger.info("Allocating an IP from the SES client network '#{network_name}' for node #{n}")
+        net_svc.allocate_ip "default", network_name, "host", n
       end
     end
 

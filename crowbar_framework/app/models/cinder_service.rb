@@ -275,6 +275,25 @@ class CinderService < OpenstackServiceObject
       net_svc.allocate_ip "default", "public", "host", n
     end
 
+    # allocate a IP from the ses_client network for volume nodes if SES
+    # integration is enabled and a network with that name exists.
+    if SES.configured?
+      network_name = "ses_client"
+      network_proposal = Proposal.find_by(barclamp: "network")
+
+      # is the ses_client network available?
+      if network_proposal["attributes"]["network"]["networks"][network_name].nil?
+        @logger.warn I18n.t(
+          "barclamp.#{@bc_name}.validation.ses_client_network_not_available",
+          ses_client: "ses_client"
+        )
+      end
+      server_nodes.each do |n|
+        @logger.info("Allocating an IP from the SES client network '#{network_name}' for node #{n}")
+        net_svc.allocate_ip "default", network_name, "host", n
+      end
+    end
+
     # No specific need to call sync dns here, as the cookbook doesn't require
     # the VIP of the cluster to be setup
     allocate_virtual_ips_for_any_cluster_in_networks(controller_elements, vip_networks)

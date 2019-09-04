@@ -66,5 +66,5 @@ en:
           cross_domain_hosts_hint: 'A comma-separated list of hosts allowed for CORS (http(s)://hostname)'
       validation:
         default_store_no_cinder: 'Cannot set default store to Cinder without Cinder being active.'
-        ceph_client_network_not_available: "The ceph_client network '%{ceph_client}' is not available in the network proposal"
+        ses_client_network_not_available: "The SES client network '%{ses_client}' is not available in the network proposal. No client network will be assigned automatically!"
         no_ses_config: 'No SES configuration found. Upload SES configuration file before enabling it for RADOS Store.'
