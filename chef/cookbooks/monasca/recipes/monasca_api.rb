@@ -57,12 +57,14 @@ end
 # When upgrading from Cloud 8, restore the Monasca database dumped from the
 # Monasca node and stamp it with Alembic revision information.
 if node["crowbar_upgrade_step"] == "done_os_upgrade"
+  db_backup_path = "/var/lib/crowbar/upgrade/monasca-mon-database.dump.gz"
   execute "restore Monasca DB" do
-    command "/usr/bin/zcat /var/lib/crowbar/upgrade/monasca-mon-database.dump.gz"\
+    command "/usr/bin/zcat #{db_backup_path}"\
              " | /usr/bin/mysql -h #{db_host} -u #{mondb_user} \"-p#{mondb_password}\""\
              " #{mondb_database}"
     not_if "monasca_db version" # If DB is stamped with an Alembic version, this already happened.
     action :run
+    only_if File.exist?(db_backup_path)
     notifies :run, "execute[stamp Monasca DB]", :immediately
   end
 
