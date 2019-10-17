@@ -93,6 +93,18 @@ unless node[:database][:galera_bootstrapped]
       action :start
     end
 
+    # This is needed because the single node bootstrap cluster will take a
+    # while until it reports "Sync". If that takes too long, user creation will
+    # fail.
+    execute "Test WSREP state early" do
+      retries 2
+      retry_delay 60
+      command "mysql -u 'monitoring' -N -B " \
+        "-e \"SHOW STATUS WHERE Variable_name='wsrep_local_state_comment';\" | cut -f 2 |
+grep Synced"
+      action :run
+    end
+
     database_user "create state snapshot transfer user" do
       connection db_connection
       username "sstuser"
@@ -100,6 +112,7 @@ unless node[:database][:galera_bootstrapped]
       host "localhost"
       provider db_settings[:user_provider]
       action :create
+      subscribes :create, "execute[Test WSREP state early]"
     end
 
     database_user "grant sstuser root privileges" do
